@@ -14,12 +14,13 @@ if [[ ${DEBUG_LOGGING} == true ]]
   cp /resources/conf/logback/logback-access.xml ${NEXUS_HOME}/etc/logback/
 fi
 
-# chown the nexus home directory
-chown -R nexus:nexus ${NEXUS_HOME}
+# Chown the nexus data directory
+chown nexus:nexus "${NEXUS_DATA}"
+chown -R nexus:nexus $(ls ${NEXUS_DATA} | awk -v NEXUS_DATA="${NEXUS_DATA}/" '{if($1 != "blobs"){ print NEXUS_DATA$1 }}')
 
 echo "Executing provision.sh"
 nohup /usr/local/bin/provision.sh &
 echo "$(date) - Base URL: ${NEXUS_BASE_URL}"
 
-# start nexus as the nexus user
-sh -c ${SONATYPE_DIR}/start-nexus-repository-manager.sh
+# Start nexus as the nexus user
+su -c "${SONATYPE_DIR}/start-nexus-repository-manager.sh" -s /bin/sh nexus

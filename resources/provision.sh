@@ -83,7 +83,12 @@ fi
   repo_name=aem
   remote_url=https://repo.adobe.com/nexus/content/groups/public/
   
+#nexus_maven group
+  group_name=maven-public
+  member_repos=("maven-releases" "maven-snapshots" "maven-central" "aem")
+  
 MAVEN_CONFIG="{\"name\":\"$repo_name\",\"remote_url\":\"$remote_url\",\"write_policy\":\"$write_policy\",\"layout_policy\":\"$layout_policy\",\"version_policy\":\"$version_policy\",\"strict_content_validation\":\"$strict_content_validation\",\"blob_store\":\"$blob_store\"}"
+GROUP_CONFIG="{\"name\":\"$group_name\",\"blob_store\":\"$blob_store\",\"strict_content_validation\":\"$strict_content_validation\",\"member_repos\":\"$member_repos\"}"
 
 # Create AEM Maven Repo if enabled
 if [ "${AEM_ENABLED}" = "true" ]
@@ -91,6 +96,9 @@ if [ "${AEM_ENABLED}" = "true" ]
   # Add base url - requests timeout if incorrect
   echo "$(date) - Creating AEM Maven Proxy repo ..."
   addAndRunScript aemRepo resources/conf/create_repo_maven_proxy.groovy "\${MAVEN_CONFIG}"
+  # adding AEM repo to Maven Public group
+  echo "$(date) - Adding AEM Maven Proxy repo to Maven Public Group ..."
+  addAndRunScript aemGroup resources/conf/create_repo_maven_group.groovy "\${GROUP_CONFIG}"
 fi
 
 

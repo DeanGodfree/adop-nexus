@@ -66,22 +66,24 @@ fi
 
 
 
-_nexus_repos_maven_defaults:
-  blob_store: "{{ nexus_blob_names.mvn.blob }}"
-  strict_content_validation: true
-  version_policy: release # release, snapshot or mixed
-  layout_policy: strict # strict or permissive
-  write_policy: allow_once # allow_once or allow
-
-nexus_repos_maven_proxy:
-  - name: central
-    remote_url: 'https://repo1.maven.org/maven2/'
-    layout_policy: permissive
-  - name: jboss
-    remote_url: 'https://repository.jboss.org/nexus/content/groups/public-jboss/'
 
 #Maven parameters if AEM is enabled
-MAVEN_CONFIG="{\"name\":\"$LDAP_NAME\",\"map_groups_as_roles\":\"$LDAP_MAP_GROUP_AS_ROLES\",\"protocol\":\"$LDAP_AUTH_PROTOCOL\",\"host\":\"$LDAP_URL\",\"port\":\"$LDAP_PORT\",\"searchBase\":\"$LDAP_SEARCH_BASE\",\"auth\":\"$LDAP_AUTH_SCHEME\",\"systemPassword\":\"$LDAP_BIND_PASSWORD\",\"systemUsername\":\"$LDAP_BIND_DN\",\"emailAddressAttribute\":\"$LDAP_USER_EMAIL_ATTRIBUTE\",\"ldapGroupsAsRoles\":\"$LDAP_GROUPS_AS_ROLES\",\"groupBaseDn\":\"$LDAP_GROUP_BASE_DN\",\"groupIdAttribute\":\"$LDAP_GROUP_ID_ATTRIBUTE\",\"groupMemberAttribute\":\"$LDAP_GROUP_MEMBER_ATTRIBUTE\",\"groupMemberFormat\":\"$LDAP_GROUP_MEMBER_FORMAT\",\"groupObjectClass\":\"$LDAP_GROUP_OBJECT_CLASS\",\"userIdAttribute\":\"$LDAP_USER_ID_ATTRIBUTE\",\"userPasswordAttribute\":\"$LDAP_USER_PASSWORD_ATTRIBUTE\",\"userObjectClass\":\"$LDAP_USER_OBJECT_CLASS\",\"userBaseDn\":\"$LDAP_USER_BASE_DN\",\"userRealNameAttribute\":\"$LDAP_USER_REAL_NAME_ATTRIBUTE\"}"
+
+#nexus_maven defaults
+  blob_store=default
+  strict_content_validation=true
+  version_policy=release 
+          # release, snapshot or mixed
+  layout_policy=strict 
+          # strict or permissive
+  write_policy=allow_once
+          # allow_once or allow
+          
+#nexus_repos_maven_proxy
+  repo_name=aem
+  remote_url=https://repo.adobe.com/nexus/content/groups/public/
+  
+MAVEN_CONFIG="{\"name\":\"$repo_name\",\"remote_url\":\"$remote_url\",\"write_policy\":\"$write_policy\",\"layout_policy\":\"$layout_policy\",\"version_policy\":\"$version_policy\",\"strict_content_validation\":\"$strict_content_validation\",\"blob_store\":\"$blob_store\"}"
 
 # Create AEM Maven Repo if enabled
 if [ "${AEM_ENABLED}" = "true" ]

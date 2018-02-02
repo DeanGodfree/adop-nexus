@@ -85,11 +85,10 @@ fi
   
 #nexus_maven group
   group_name=maven-public
-  member_repos=("maven-releases" "maven-snapshots" "maven-central" "aem")
+  member_repos=(maven-releases maven-snapshots maven-central aem)
   
 MAVEN_CONFIG="{\"name\":\"$repo_name\",\"remote_url\":\"$remote_url\",\"write_policy\":\"$write_policy\",\"layout_policy\":\"$layout_policy\",\"version_policy\":\"$version_policy\",\"strict_content_validation\":\"$strict_content_validation\",\"blob_store\":\"$blob_store\"}"
-GROUP_CONFIG="{\"name\":\"$group_name\",\"blob_store\":\"$blob_store\",\"strict_content_validation\":\"$strict_content_validation\",\"member_repos\":\"$member_repos\"}"
-
+GROUP_CONFIG="{\"name\":\"$group_name\",\"blob_store\":\"$blob_store\",\"strict_content_validation\":\"$strict_content_validation\",\"member_repos\":\"${member_repos[*]}\"}"
 # Create AEM Maven Repo if enabled
 if [ "${AEM_ENABLED}" = "true" ]
    then

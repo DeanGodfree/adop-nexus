@@ -3,11 +3,11 @@ import org.sonatype.nexus.repository.config.Configuration
 
 parsed_args = new JsonSlurper().parseText(args)
 
-//authentication = parsed_args.remote_username == null ? null : [
-//        type: 'username',
-//        username: parsed_args.remote_username,
-//        password: parsed_args.remote_password
-//]
+authentication = parsed_args.remote_username == null ? null : [
+        type: 'username',
+        username: parsed_args.remote_username,
+        password: parsed_args.remote_password
+]
 
 configuration = new Configuration(
         repositoryName: parsed_args.name,
@@ -28,7 +28,7 @@ configuration = new Configuration(
                         autoBlock: true,
                         authentication: authentication,
                         connection: [
-                                useTrustStore: false
+                                useTrustStore: true
                         ]
                 ],
                 storage: [

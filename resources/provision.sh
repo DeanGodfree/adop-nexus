@@ -97,7 +97,7 @@ if [ "${AEM_ENABLED}" = "true" ]
   addAndRunScript aemRepo resources/conf/create_repo_maven_proxy.groovy "\${MAVEN_CONFIG}"
   # adding AEM repo to Maven Public group
   echo "$(date) - Adding AEM Maven Proxy repo to Maven Public Group ..."
-  addAndRunScript aemGroup resources/conf/create_repo_maven_group.groovy "\${GROUP_CONFIG}"
+  addAndRunScript aemGroup resources/conf/create_repo_maven_group_AEM.groovy "\${GROUP_CONFIG}"
 fi
 
 

@@ -3,6 +3,7 @@ import org.sonatype.nexus.scheduling.TaskConfiguration
 import org.sonatype.nexus.scheduling.TaskInfo
 import org.sonatype.nexus.scheduling.TaskScheduler
 import org.sonatype.nexus.scheduling.schedule.Schedule
+import org.sonatype.nexus.scheduling.schedule.Daily
 
 parsed_args = new JsonSlurper().parseText(args)
 
